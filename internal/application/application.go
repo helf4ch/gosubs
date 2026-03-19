@@ -75,6 +75,7 @@ func (app Application) ListenAndServe() error {
 		Addr:    app.Config.Addr,
 		Handler: app.mux,
 	}
+	app.Log.Info("server started")
 	return srv.ListenAndServe()
 }
 

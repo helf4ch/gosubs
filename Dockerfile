@@ -14,5 +14,6 @@ FROM scratch
 WORKDIR /root/
 
 COPY --from=builder /app/main .
+COPY .env .
 
 CMD ["./main"]

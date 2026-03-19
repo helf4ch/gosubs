@@ -7,8 +7,9 @@ import (
 )
 
 type Config struct {
-	Addr   string `env:"ADDR,required"`
-	DbConn string `env:"DB_CONN,required"`
+	Addr            string `env:"ADDR,required"`
+	DbConn          string `env:"DB_CONN,required"`
+	GooseMigrations string `env:"GOOSE_MIGRATION_DIR,required"`
 }
 
 func New() (*Config, error) {
