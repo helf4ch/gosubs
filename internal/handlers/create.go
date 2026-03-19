@@ -12,6 +12,16 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
+// Create godoc
+// @Summary Создать подписку
+// @Description Создать подписку
+// @Accept json
+// @Produce json
+// @Param sub body dto.CreateSubscriptionRequest true "тело подписки"
+// @Success 200 {object} application.AppResponse{body=dto.CreateSubscriptionResponse}
+// @Failure 400 {object} application.AppResponse{error=string}
+// @Failure 500 {object} application.AppResponse{error=string}
+// @Router /subs/ [post]
 func Create(
 	app application.Application,
 	w http.ResponseWriter,

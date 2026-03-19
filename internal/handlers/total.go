@@ -11,6 +11,18 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+// Total godoc
+// @Summary Подсчет стоимости подписок
+// @Description Подсчет стоимости подписок за период и по параметрам
+// @Produce json
+// @Param userId query uuid.UUID false "userId"
+// @Param serviceName query string false "serviceName"
+// @Param startDate query string true "startDate"
+// @Param endDate query string true "endDate"
+// @Success 200 {object} application.AppResponse{body=dto.TotalSubscriptionResponse}
+// @Failure 400 {object} application.AppResponse{error=string}
+// @Failure 500 {object} application.AppResponse{error=string}
+// @Router /subs/total [get]
 func Total(
 	app application.Application,
 	w http.ResponseWriter,

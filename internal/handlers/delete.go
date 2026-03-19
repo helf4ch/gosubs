@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"database/sql"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -9,6 +8,15 @@ import (
 	"github.com/helf4ch/gocrudl/internal/dto"
 )
 
+// Delete godoc
+// @Summary Удалить подписку
+// @Description Удалить подписку по id
+// @Produce json
+// @Param id path uuid.UUID true "id подписки"
+// @Success 200 {object} application.AppResponse{body=dto.DeleteSubscriptionResponse}
+// @Failure 400 {object} application.AppResponse{error=string}
+// @Failure 500 {object} application.AppResponse{error=string}
+// @Router /subs/{id} [delete]
 func Delete(
 	app application.Application,
 	w http.ResponseWriter,
@@ -27,13 +35,6 @@ func Delete(
 
 	count, err := app.Store.DeleteSubscription(r.Context(), app.Store.Pool, id)
 	if err != nil {
-		if err == sql.ErrNoRows {
-			return &application.AppError{
-				Code:    http.StatusNoContent,
-				Message: "no such record",
-				Err:     err,
-			}
-		}
 		return err
 	}
 

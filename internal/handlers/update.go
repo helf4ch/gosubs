@@ -13,6 +13,18 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
+// Update godoc
+// @Summary Редактировать подписку
+// @Description Редактировать подписку по id
+// @Accept json
+// @Produce json
+// @Param id path uuid.UUID true "id подписки"
+// @Param sub body dto.UpdateSubscriptionRequest true "новое тело подписки"
+// @Success 200 {object} application.AppResponse{body=dto.UpdateSubscriptionResponse}
+// @Failure 400 {object} application.AppResponse{error=string}
+// @Failure 404 {object} application.AppResponse{error=string}
+// @Failure 500 {object} application.AppResponse{error=string}
+// @Router /subs/{id} [put]
 func Update(
 	app application.Application,
 	w http.ResponseWriter,

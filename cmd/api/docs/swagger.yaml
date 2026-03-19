@@ -1,0 +1,407 @@
+basePath: /
+definitions:
+  github_com_helf4ch_gocrudl_internal_application.AppResponse:
+    properties:
+      body: {}
+      error:
+        type: string
+      ok:
+        type: boolean
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.CreateSubscriptionRequest:
+    properties:
+      endDate:
+        type: string
+      price:
+        type: integer
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      userId:
+        type: string
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.CreateSubscriptionResponse:
+    properties:
+      createdAt:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.DeleteSubscriptionResponse:
+    properties:
+      count:
+        type: integer
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.ListSubscriptionResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.Subscription'
+        type: array
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.ReadSubscriptionResponse:
+    properties:
+      createdAt:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.Subscription:
+    properties:
+      createdAt:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.TotalSubscriptionResponse:
+    properties:
+      cost:
+        type: integer
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.UpdateSubscriptionRequest:
+    properties:
+      endDate:
+        type: string
+      price:
+        type: integer
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      userId:
+        type: string
+    type: object
+  github_com_helf4ch_gocrudl_internal_dto.UpdateSubscriptionResponse:
+    properties:
+      createdAt:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: string
+      price:
+        type: integer
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Микросервис подписок
+  title: Подписки
+  version: "1.0"
+paths:
+  /subs/:
+    post:
+      consumes:
+      - application/json
+      description: Создать подписку
+      parameters:
+      - description: тело подписки
+        in: body
+        name: sub
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.CreateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                body:
+                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.CreateSubscriptionResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Создать подписку
+  /subs/{id}:
+    delete:
+      description: Удалить подписку по id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                body:
+                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.DeleteSubscriptionResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Удалить подписку
+    get:
+      description: Получить подписку по id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                body:
+                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.ReadSubscriptionResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Получить подписку
+    put:
+      consumes:
+      - application/json
+      description: Редактировать подписку по id
+      parameters:
+      - description: новое тело подписки
+        in: body
+        name: sub
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.UpdateSubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                body:
+                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.UpdateSubscriptionResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "404":
+          description: Not Found
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Редактировать подписку
+  /subs/list:
+    get:
+      description: Вывести подписки по параметрам
+      parameters:
+      - description: price
+        in: query
+        name: price
+        type: integer
+      - description: serviceName
+        in: query
+        name: serviceName
+        type: string
+      - description: startDate
+        in: query
+        name: startDate
+        type: string
+      - description: endDate
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                body:
+                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.ListSubscriptionResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Вывести подписки
+  /subs/total:
+    get:
+      description: Подсчет стоимости подписок за период и по параметрам
+      parameters:
+      - description: serviceName
+        in: query
+        name: serviceName
+        type: string
+      - description: startDate
+        in: query
+        name: startDate
+        required: true
+        type: string
+      - description: endDate
+        in: query
+        name: endDate
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                body:
+                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.TotalSubscriptionResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+            - properties:
+                error:
+                  type: string
+              type: object
+      summary: Подсчет стоимости подписок
+swagger: "2.0"

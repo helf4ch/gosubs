@@ -12,6 +12,19 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+// List godoc
+// @Summary Вывести подписки
+// @Description Вывести подписки по параметрам
+// @Produce json
+// @Param userId query uuid.UUID false "userId"
+// @Param price query int false "price"
+// @Param serviceName query string false "serviceName"
+// @Param startDate query string false "startDate"
+// @Param endDate query string false "endDate"
+// @Success 200 {object} application.AppResponse{body=dto.ListSubscriptionResponse}
+// @Failure 400 {object} application.AppResponse{error=string}
+// @Failure 500 {object} application.AppResponse{error=string}
+// @Router /subs/list [get]
 func List(
 	app application.Application,
 	w http.ResponseWriter,

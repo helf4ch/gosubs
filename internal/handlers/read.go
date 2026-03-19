@@ -10,6 +10,16 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
+// Read godoc
+// @Summary Получить подписку
+// @Description Получить подписку по id
+// @Produce json
+// @Param id path uuid.UUID true "id подписки"
+// @Success 200 {object} application.AppResponse{body=dto.ReadSubscriptionResponse}
+// @Failure 400 {object} application.AppResponse{error=string}
+// @Failure 404 {object} application.AppResponse{error=string}
+// @Failure 500 {object} application.AppResponse{error=string}
+// @Router /subs/{id} [get]
 func Read(
 	app application.Application,
 	w http.ResponseWriter,
