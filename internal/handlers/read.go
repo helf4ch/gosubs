@@ -1,13 +1,13 @@
 package handlers
 
 import (
-	"database/sql"
 	"net/http"
 
 	"github.com/google/uuid"
 	"github.com/helf4ch/gocrudl/internal/application"
 	"github.com/helf4ch/gocrudl/internal/dto"
 	"github.com/helf4ch/gocrudl/internal/utils"
+	"github.com/jackc/pgx/v5"
 )
 
 func Read(
@@ -28,9 +28,9 @@ func Read(
 
 	sub, err := app.Store.ReadSubscription(r.Context(), app.Store.Pool, id)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if err == pgx.ErrNoRows {
 			return &application.AppError{
-				Code:    http.StatusNoContent,
+				Code:    http.StatusNotFound,
 				Message: "no such record",
 				Err:     err,
 			}
@@ -51,7 +51,10 @@ func Read(
 		},
 	}
 
-	app.ResponseOk(w, out)
+	err = app.ResponseOk(w, out)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

@@ -23,7 +23,7 @@ func RecoverMiddleware(next application.Handler) application.Handler {
 					slog.String("err", fmt.Sprint("%v", err)),
 					slog.String("stack", string(debug.Stack())),
 				)
-				app.ResponseInternalError(w)
+				app.Response(w, false, http.StatusInternalServerError, "internal error", nil)
 			}
 		}()
 

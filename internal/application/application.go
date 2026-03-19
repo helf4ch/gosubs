@@ -79,19 +79,22 @@ func (app Application) ListenAndServe() error {
 }
 
 type AppResponse struct {
-	Ok   bool `json:"ok"`
-	Body any  `json:"body"`
+	Ok    bool   `json:"ok"`
+	Error string `json:"error,omitempty"`
+	Body  any    `json:"body,omitempty"`
 }
 
 func (app Application) Response(
 	w http.ResponseWriter,
 	ok bool,
 	code int,
+	error string,
 	body any,
 ) error {
 	r := AppResponse{
-		Ok:   ok,
-		Body: body,
+		Ok:    ok,
+		Error: error,
+		Body:  body,
 	}
 
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -107,7 +110,7 @@ func (app Application) Response(
 
 // 200
 func (app Application) ResponseOk(w http.ResponseWriter, body any) error {
-	err := app.Response(w, true, http.StatusOK, body)
+	err := app.Response(w, true, http.StatusOK, "", body)
 	if err != nil {
 		return fmt.Errorf("response ok: %w", err)
 	}
@@ -117,25 +120,10 @@ func (app Application) ResponseOk(w http.ResponseWriter, body any) error {
 
 // 201
 func (app Application) ResponseCreated(w http.ResponseWriter, body any) error {
-	err := app.Response(w, true, http.StatusCreated, body)
+	err := app.Response(w, true, http.StatusCreated, "", body)
 	if err != nil {
 		return fmt.Errorf("response ok: %w", err)
 	}
 
 	return nil
-}
-
-// 400
-func (app Application) ResponseBadRequest(w http.ResponseWriter) {
-	app.Response(w, false, http.StatusBadRequest, nil)
-}
-
-// 401
-func (app Application) ResponseUnauthorized(w http.ResponseWriter) {
-	app.Response(w, false, http.StatusUnauthorized, nil)
-}
-
-// 500
-func (app Application) ResponseInternalError(w http.ResponseWriter) {
-	app.Response(w, false, http.StatusInternalServerError, nil)
 }

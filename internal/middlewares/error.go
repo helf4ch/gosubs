@@ -24,7 +24,7 @@ func ErrorMiddleware(next application.Handler) application.Handler {
 		var appErr *application.AppError
 
 		if errors.As(err, &appErr) {
-			app.Response(w, false, appErr.Code, appErr.Message)
+			app.Response(w, false, appErr.Code, appErr.Message, nil)
 
 			app.Log.Info(
 				"handler returned app error",
@@ -40,7 +40,7 @@ func ErrorMiddleware(next application.Handler) application.Handler {
 			slog.String("err", err.Error()),
 		)
 
-		app.ResponseInternalError(w)
+		app.Response(w, false, http.StatusInternalServerError, "internal error", nil)
 
 		return nil
 	}

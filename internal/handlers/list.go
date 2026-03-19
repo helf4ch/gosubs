@@ -103,7 +103,10 @@ func List(
 		})
 	}
 
-	app.ResponseOk(w, out)
+	err = app.ResponseOk(w, out)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

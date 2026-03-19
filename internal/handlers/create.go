@@ -2,13 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
-	"io"
+	"errors"
 	"net/http"
 
 	db "github.com/helf4ch/gocrudl/db/sqlc"
 	"github.com/helf4ch/gocrudl/internal/application"
 	"github.com/helf4ch/gocrudl/internal/dto"
 	"github.com/helf4ch/gocrudl/internal/utils"
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 func Create(
@@ -18,13 +19,8 @@ func Create(
 ) error {
 	defer r.Body.Close()
 
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		return err
-	}
-
 	var in dto.CreateSubscriptionRequest
-	err = json.Unmarshal(body, &in)
+	err := json.NewDecoder(r.Body).Decode(&in)
 	if err != nil {
 		return &application.AppError{
 			Code:    http.StatusBadRequest,
@@ -55,6 +51,16 @@ func Create(
 		},
 	)
 	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) {
+			if pgErr.Code == "23505" {
+				return &application.AppError{
+					Code:    http.StatusConflict,
+					Message: "record already exists",
+					Err:     err,
+				}
+			}
+		}
 		return err
 	}
 

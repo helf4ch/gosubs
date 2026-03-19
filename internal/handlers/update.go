@@ -10,6 +10,7 @@ import (
 	"github.com/helf4ch/gocrudl/internal/application"
 	"github.com/helf4ch/gocrudl/internal/dto"
 	"github.com/helf4ch/gocrudl/internal/utils"
+	"github.com/jackc/pgx/v5"
 )
 
 func Update(
@@ -68,6 +69,13 @@ func Update(
 		},
 	)
 	if err != nil {
+		if err == pgx.ErrNoRows {
+			return &application.AppError{
+				Code:    http.StatusNotFound,
+				Message: "no such record",
+				Err:     err,
+			}
+		}
 		return err
 	}
 
