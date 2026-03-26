@@ -12,7 +12,7 @@ import (
 
 type Querier interface {
 	CreateSubscription(ctx context.Context, db DBTX, arg CreateSubscriptionParams) (Subscriptions, error)
-	DeleteSubscription(ctx context.Context, db DBTX, id uuid.UUID) (int64, error)
+	DeleteSubscription(ctx context.Context, db DBTX, id uuid.UUID) (Subscriptions, error)
 	ListSubscriptions(ctx context.Context, db DBTX, arg ListSubscriptionsParams) ([]Subscriptions, error)
 	ReadSubscription(ctx context.Context, db DBTX, id uuid.UUID) (Subscriptions, error)
 	TotalSubscriptionsCost(ctx context.Context, db DBTX, arg TotalSubscriptionsCostParams) (int64, error)

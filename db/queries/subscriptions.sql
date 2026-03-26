@@ -22,12 +22,9 @@ where id = $1
 returning *;
 
 -- name: DeleteSubscription :one
-with deleted_rows as (
-    delete from subscriptions
-    where id = $1
-    returning *
-)
-select count(*) from deleted_rows;
+delete from subscriptions
+where id = $1
+returning *;
 
 -- name: ListSubscriptions :many
 select *

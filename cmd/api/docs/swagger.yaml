@@ -40,11 +40,6 @@ definitions:
       userId:
         type: string
     type: object
-  github_com_helf4ch_gocrudl_internal_dto.DeleteSubscriptionResponse:
-    properties:
-      count:
-        type: integer
-    type: object
   github_com_helf4ch_gocrudl_internal_dto.ListSubscriptionResponse:
     properties:
       list:
@@ -183,17 +178,21 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
+        "400":
+          description: Bad Request
           schema:
             allOf:
             - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'
             - properties:
-                body:
-                  $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_dto.DeleteSubscriptionResponse'
+                error:
+                  type: string
               type: object
-        "400":
-          description: Bad Request
+        "404":
+          description: Not Found
           schema:
             allOf:
             - $ref: '#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse'

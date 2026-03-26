@@ -456,8 +456,14 @@ const docTemplate = `{
                 ],
                 "summary": "Удалить подписку",
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_helf4ch_gocrudl_internal_application.AppResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
                             "allOf": [
                                 {
@@ -466,16 +472,16 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "body": {
-                                            "$ref": "#/definitions/github_com_helf4ch_gocrudl_internal_dto.DeleteSubscriptionResponse"
+                                        "error": {
+                                            "type": "string"
                                         }
                                     }
                                 }
                             ]
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "allOf": [
                                 {
@@ -573,14 +579,6 @@ const docTemplate = `{
                 },
                 "userId": {
                     "type": "string"
-                }
-            }
-        },
-        "github_com_helf4ch_gocrudl_internal_dto.DeleteSubscriptionResponse": {
-            "type": "object",
-            "properties": {
-                "count": {
-                    "type": "integer"
                 }
             }
         },

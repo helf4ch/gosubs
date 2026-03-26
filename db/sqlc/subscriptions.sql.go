@@ -52,19 +52,25 @@ func (q *Queries) CreateSubscription(ctx context.Context, db DBTX, arg CreateSub
 }
 
 const deleteSubscription = `-- name: DeleteSubscription :one
-with deleted_rows as (
-    delete from subscriptions
-    where id = $1
-    returning id, service_name, price, user_id, start_date, end_date, created_at, updated_at
-)
-select count(*) from deleted_rows
+delete from subscriptions
+where id = $1
+returning id, service_name, price, user_id, start_date, end_date, created_at, updated_at
 `
 
-func (q *Queries) DeleteSubscription(ctx context.Context, db DBTX, id uuid.UUID) (int64, error) {
+func (q *Queries) DeleteSubscription(ctx context.Context, db DBTX, id uuid.UUID) (Subscriptions, error) {
 	row := db.QueryRow(ctx, deleteSubscription, id)
-	var count int64
-	err := row.Scan(&count)
-	return count, err
+	var i Subscriptions
+	err := row.Scan(
+		&i.ID,
+		&i.ServiceName,
+		&i.Price,
+		&i.UserID,
+		&i.StartDate,
+		&i.EndDate,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
 }
 
 const listSubscriptions = `-- name: ListSubscriptions :many

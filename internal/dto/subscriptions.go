@@ -44,11 +44,6 @@ type UpdateSubscriptionResponse struct {
 	Subscription
 }
 
-// Delete
-type DeleteSubscriptionResponse struct {
-	Count int `json:"count"`
-}
-
 // List
 type ListSubscriptionResponse struct {
 	List []Subscription `json:"list"`
