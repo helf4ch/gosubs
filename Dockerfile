@@ -9,7 +9,7 @@ COPY . .
 RUN CGO_ENABLED=0 go build -o main ./cmd/api
 
 
-FROM scratch
+FROM alpine
 
 WORKDIR /root/
 
